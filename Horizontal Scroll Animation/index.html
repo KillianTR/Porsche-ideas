@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/porsche-logo.png">
+    <title>Porsche 911 GT3 RS</title>
+</head>
+<body>
+    <nav>
+        <a href="#">Porsche</a>
+        <a href="#">About</a>
+        <a href="#">Contact</a>
+        <a href="#">Work</a>
+    </nav>
+
+    <div class="container">
+        <section id="section-1">
+            <h1>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores, porro!
+            </h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque provident non tempora explicabo? Iure rem repellendus cumque, totam fuga ipsa.</p>
+        </section>
+        <section id="section-2">
+            <div class="img-1"><img src="./assets/img-1.jpeg" alt=""/></div>
+            <div class="img-2"><img src="./assets/img-2.jpeg" alt=""/></div>
+            <div class="img-3"><img src="./assets/img-3.jpg" alt=""/></div>
+        </section>
+        <section id="section-3">
+            <div class="img-4"><img src="./assets/img-4.jpg" alt=""/></div>
+            <div class="img-5"><img src="./assets/img-5.jpg" alt=""/></div>
+            <div class="img-6"><img src="./assets/img-6.jpg" alt=""/></div>
+        </section>
+        <section id="section-4">
+            <h1>
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum, quas.
+            </h1>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Itaque provident non tempora explicabo? Iure rem repellendus cumque, totam fuga ipsa.</p>
+        </section>
+        <section id="section-5">
+            <div class="img-7"><img src="./assets/img-7.jpeg" alt=""/></div>
+            <div class="img-8"><img src="./assets/img-8.jpeg" alt=""/></div>
+            <div class="img-9"><img src="./assets/img-9.jpeg" alt=""/></div>
+        </section>
+    </div>
+
+    <div class="timeline">
+        <div class="scroller"><p>[<span>Drag</span>]</p></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Draggable.min.js"></script>
+    <script>
+        gsap.registerPlugin(Draggable);
+
+        window.onload = function () {
+            const timeline = document.querySelector(".timeline");
+            const scroller = document.querySelector(".scroller");
+            const container = document.querySelector(".container");
+            const timelineWidth = timeline.offsetWidth;
+            const scrollerWidth = scroller.offsetWidth;
+            const gap = parseInt(window.getComputedStyle(document.body).fontSize);
+
+            const maxDragX = timelineWidth - scrollerWidth - 2 * gap;
+
+            for (let i = 0; i < 50; i++) {
+                const marker = document.createElement("div");
+                marker.classList.add("marker");
+                timeline.appendChild(marker);
+            }
+
+            Draggable.create(scroller, {
+                type: "x",
+                bounds: {
+                    minX: gap,
+                    maxX: timelineWidth - scrollerWidth - gap,
+                },
+                onDrag: function () {
+                    let progress = (this.x - gap) / maxDragX;
+                    let containerX = -400 * (timelineWidth / 100) * progress;
+                    gsap.to(container, {
+                        x: containerX,
+                        duration: 1,
+                        ease: "power3.out",
+                    });
+                },
+            });
+        };
+    </script>
+</body>
+</html>
